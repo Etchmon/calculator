@@ -55,20 +55,26 @@ const setDecimal = function (data) {
 }
 
 const setOper = function (data) {
+
     if (operatorValue != '') {
         equal();
         num1 = document.getElementById('screen').innerHTML;
         num2 = '0';
+        console.log(num2);
         operatorValue = data;
         displayValue = '0';
     } else if (operatorValue === '') {
         operatorValue = data;
+        num2 = '0';
+        console.log(operatorValue)
     }
 }
 
 const equal = function (data) {
     document.getElementById('screen').innerHTML = operate(operatorValue, num1, num2).toFixed(2);
     displayValue = document.getElementById('screen').innerHTML;
+    num1 = displayValue;
+    operatorValue = '';
 }
 
 const operate = function (operatorValue, num1, num2) {
