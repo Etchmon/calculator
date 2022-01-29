@@ -57,15 +57,16 @@ const setDecimal = function (data) {
 const setOper = function (data) {
 
     if (operatorValue != '') {
+        if (num2 == '') return;
         equal();
         num1 = document.getElementById('screen').innerHTML;
-        num2 = '0';
+        num2 = '';
         console.log(num2);
         operatorValue = data;
         displayValue = '0';
     } else if (operatorValue === '') {
         operatorValue = data;
-        num2 = '0';
+        num2 = '';
         console.log(operatorValue)
     }
 }
@@ -99,7 +100,6 @@ const operate = function (operatorValue, num1, num2) {
 }
 
 const updateDisplay = function (data) {
-
     if (displayValue === '0') {
         displayValue = data;
         document.getElementById('screen').innerHTML = displayValue;
