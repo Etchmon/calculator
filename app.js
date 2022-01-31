@@ -3,6 +3,7 @@ let num1 = '';
 let num2 = '';
 let operatorValue = '';
 
+let screen = document.getElementById('screen');
 let button = document.querySelectorAll("[number]");
 let operator = document.querySelectorAll("[operator");
 let equals = document.getElementById('equals');
@@ -11,12 +12,10 @@ let clearBtn = document.getElementById('clear-btn');
 let deleteBtn = document.getElementById('delete-btn');
 
 button.forEach((button) => {
-    button.addEventListener('click', () => updateDisplay(button.innerHTML));
     button.addEventListener('click', () => setNum(button.innerHTML));
 })
 
 operator.forEach((operator) => {
-    operator.addEventListener('click', () => updateDisplay(operator.innerHTML));
     operator.addEventListener('click', () => setOper(operator.innerHTML));
 })
 
@@ -29,9 +28,11 @@ const setNum = function (data) {
     if (operatorValue !== '') {
         num2 += data;
         console.log(num2);
+        updateDisplay(data);
     } else {
         num1 += data;
         console.log(num1);
+        updateDisplay(data);
     }
 }
 
@@ -40,18 +41,22 @@ const setDecimal = function (data) {
         if (num1.includes('.')) {
             return
         } else {
-            displayValue += data;
+            updateDisplay(data);
             num1 += data;
         }
-
     } else {
         if (num2.includes('.')) {
             return
         } else {
-            displayValue += data;
+            if (num2 === '') num1 += '0';
+            updateDisplay(data);
             num2 += data;
         }
     }
+}
+
+const roundResult = function (number) {
+    return Math.round(number * 100) / 100;
 }
 
 const setOper = function (data) {
@@ -59,21 +64,22 @@ const setOper = function (data) {
     if (operatorValue != '') {
         if (num2 == '') return;
         equal();
-        num1 = document.getElementById('screen').innerHTML;
+        num1 = screen;
         num2 = '';
         console.log(num2);
         operatorValue = data;
-        displayValue = '0';
+        updateDisplay(data);
     } else if (operatorValue === '') {
         operatorValue = data;
         num2 = '';
+        updateDisplay(data);
         console.log(operatorValue)
     }
 }
 
 const equal = function (data) {
-    document.getElementById('screen').innerHTML = operate(operatorValue, num1, num2).toFixed(2);
-    displayValue = document.getElementById('screen').innerHTML;
+    screen.innerHTML = roundResult(operate(operatorValue, num1, num2));
+    displayValue = screen.innerHTML;
     num1 = displayValue;
     operatorValue = '';
 }
@@ -102,25 +108,26 @@ const operate = function (operatorValue, num1, num2) {
 const updateDisplay = function (data) {
     if (displayValue === '0') {
         displayValue = data;
-        document.getElementById('screen').innerHTML = displayValue;
+        screen.innerHTML = displayValue;
     } else {
         displayValue += data;
-        document.getElementById('screen').innerHTML = displayValue;
+        screen.innerHTML = displayValue;
     }
 
 }
 
 const deleteNum = function () {
     if (operatorValue === '') {
-        document.getElementById('screen').innerHTML = document.getElementById('screen').innerHTML.slice(0, -1);
-        displayValue = document.getElementById('screen').innerHTML;
+        screen.innerHTML = screen.innerHTML.slice(0, -1);
+        displayValue = screen.innerHTML;
         num1 = displayValue;
         console.log(num1);
 
     } else {
-        document.getElementById('screen').innerHTML = document.getElementById('screen').innerHTML.slice(0, -1);
+        screen.innerHTML = screen.innerHTML.slice(0, -1);
         displayValue = num2.toString().slice(0, -1);
         num2 = displayValue;
+        operatorValue = operatorValue;
         console.log(num2);
     }
 }
