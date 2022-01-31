@@ -1,8 +1,10 @@
+// Variables
 let displayValue = '0';
 let num1 = '';
 let num2 = '';
 let operatorValue = '';
 
+// HTML elements as variables
 let screen = document.getElementById('screen');
 let button = document.querySelectorAll("[number]");
 let operator = document.querySelectorAll("[operator");
@@ -11,6 +13,7 @@ let decimal = document.getElementById('decimal');
 let clearBtn = document.getElementById('clear-btn');
 let deleteBtn = document.getElementById('delete-btn');
 
+// Event Listeners
 button.forEach((button) => {
     button.addEventListener('click', () => setNum(button.innerHTML));
 })
@@ -24,6 +27,7 @@ decimal.addEventListener('click', () => setDecimal(decimal.innerHTML));
 clearBtn.addEventListener('click', () => clear());
 deleteBtn.addEventListener('click', () => deleteNum());
 
+// Functions
 const setNum = function (data) {
     if (operatorValue !== '') {
         num2 += data;
